@@ -61,14 +61,12 @@ onDocumentClick(event: MouseEvent) {
 
   timeline = [
     { text: 'Fachinformatiker AE · IBB 2025–heute',  active: true  },
-    { text: 'Game Dev · WBH 2020–2024',              active: false },
     { text: 'Zerspanungsmechaniker · BSL 2018–2025', active: false },
+    { text: 'Game Dev · WBH 2020–2024',              active: false },
     { text: 'Abitur · Mettingen 2013–2016',          active: false },
   ];
 
   stats = [
-    { value: '7+', label: 'Berufsjahre',  purple: false },
-    { value: '6+', label: 'Sprachen',     purple: true  },
     { value: 'B2', label: 'Englisch',     purple: false },
   ];
 

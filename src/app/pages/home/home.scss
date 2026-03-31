@@ -100,6 +100,9 @@
   position: relative;
   z-index: 1;
   padding: 3rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .eyebrow {
@@ -138,11 +141,19 @@ h1 {
   }
 }
 
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+.hero-top {
+  margin-bottom: auto;
+}
+
+.hero-bottom {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
   margin-top: 2rem;
+
+  @media (max-width: 691px) {
+    justify-content: flex-start;
+  }
 }
 
 .sub {
@@ -155,6 +166,8 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  min-width: 220px;
+  flex-shrink: 0;
 }
 
 .btn-primary {
@@ -188,6 +201,23 @@ h1 {
   transition: opacity 0.2s;
 
   &:hover { opacity: 0.8; }
+}
+
+.hero-photo {
+  display: none;
+
+  @media (min-width: 692px) {
+    display: block;
+    width: 130px;
+    height: 175px;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 8px;
+    border: 1px solid var(--accent-rose);
+    outline: 2px solid var(--accent-purple);
+    outline-offset: 3px;
+    margin-bottom: 20px;
+  }
 }
 
 // ── Bottom Grid ────────────────────────────────────
