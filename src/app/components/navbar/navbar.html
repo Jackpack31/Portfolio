@@ -1,6 +1,8 @@
 <nav class="nav">
   <a routerLink="/" class="logo">JL<span>/</span>dev</a>
-  <div class="links">
+
+  <!-- Desktop Links -->
+  <div class="links desktop">
     @for (link of links; track link.path) {
       <a [routerLink]="link.path"
          routerLinkActive="active"
@@ -9,4 +11,26 @@
       </a>
     }
   </div>
+
+  <!-- Mobile Burger Button -->
+  <button class="burger" (click)="toggleMenu()">
+    <span [class]="menuOpen ? 'bar open' : 'bar'"></span>
+    <span [class]="menuOpen ? 'bar open' : 'bar'"></span>
+    <span [class]="menuOpen ? 'bar open' : 'bar'"></span>
+  </button>
+
+  <!-- Mobile Dropdown -->
+  @if (menuOpen) {
+    <div class="mobile-menu">
+      @for (link of links; track link.path) {
+        <a [routerLink]="link.path"
+           routerLinkActive="active"
+           [routerLinkActiveOptions]="{ exact: link.path === '/' }"
+           (click)="closeMenu()">
+          <span class="menu-arrow">→</span>
+          {{ link.label }}
+        </a>
+      }
+    </div>
+  }
 </nav>

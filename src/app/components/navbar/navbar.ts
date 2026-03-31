@@ -9,10 +9,20 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './navbar.scss'
 })
 export class Navbar {
+  menuOpen = false;
+
   links = [
-    { label: 'über_mich',  path: '/'        },
-    { label: 'skills',     path: '/skills'  },
-    { label: 'projekte',   path: '/projekte'},
-    { label: '3d_druck',   path: '/3d-druck'},
+    { label: 'über_mich',  path: '/'         },
+    { label: 'skills',     path: '/skills'   },
+    { label: 'projekte',   path: '/projekte' },
+    { label: '3d_druck',   path: '/3d-druck' },
   ];
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  closeMenu() {
+    this.menuOpen = false;
+  }
 }

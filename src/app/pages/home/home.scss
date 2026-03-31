@@ -21,6 +21,11 @@
   100% { transform: translate(0px, 0px) scale(1);        opacity: 0.5; }
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
 .page {
   position: relative;
   overflow: hidden;
@@ -30,7 +35,7 @@
   justify-content: space-between;
 }
 
-// Glows
+// ── Glows ──────────────────────────────────────────
 .glow {
   position: absolute;
   border-radius: 50%;
@@ -42,25 +47,25 @@
 .glow1 {
   width: 400px; height: 400px;
   top: -100px; right: -80px;
-  background: radial-gradient(circle, rgba(255, 107, 133, 0.45) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--glow1) 0%, transparent 70%);
   animation: pulse1 7s ease-in-out infinite;
 }
 
 .glow2 {
   width: 320px; height: 320px;
   bottom: -80px; left: 15%;
-  background: radial-gradient(circle, rgba(167, 139, 250, 0.38) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--glow2) 0%, transparent 70%);
   animation: pulse2 9s ease-in-out infinite;
 }
 
 .glow3 {
   width: 280px; height: 280px;
   top: 30%; left: -60px;
-  background: radial-gradient(circle, rgba(255, 107, 133, 0.22) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--glow3) 0%, transparent 70%);
   animation: pulse3 11s ease-in-out infinite;
 }
 
-// Hero
+// ── Hero ───────────────────────────────────────────
 .hero {
   position: relative;
   z-index: 1;
@@ -70,7 +75,7 @@
 .eyebrow {
   font-family: var(--font-mono);
   font-size: 10px;
-  color: rgba(255, 107, 133, 0.8);
+  color: var(--accent-rose);
   letter-spacing: 3px;
   margin-bottom: 1.2rem;
   display: flex;
@@ -96,7 +101,7 @@ h1 {
 
   .outline {
     display: block;
-    background: linear-gradient(90deg, #ff6b85, #c4b5fd);
+    background: linear-gradient(90deg, var(--accent-rose), var(--accent-purple));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -140,7 +145,7 @@ h1 {
 }
 
 .btn-secondary {
-  background: rgba(167, 139, 250, 0.1);
+  background: transparent;
   color: var(--accent-purple);
   border: 1px solid var(--border-purple);
   padding: 11px 22px;
@@ -155,7 +160,7 @@ h1 {
   &:hover { opacity: 0.8; }
 }
 
-// Bottom Grid
+// ── Bottom Grid ────────────────────────────────────
 .bottom-grid {
   position: relative;
   z-index: 1;
@@ -175,37 +180,41 @@ h1 {
 .col-label {
   font-family: var(--font-mono);
   font-size: 9px;
-  color: rgba(255, 107, 133, 0.55);
+  color: var(--accent-rose);
+  opacity: 0.55;
   letter-spacing: 2px;
   margin-bottom: 12px;
 }
 
-// Chips
+// ── Chips ──────────────────────────────────────────
 .chips { display: flex; flex-wrap: wrap; gap: 5px; }
 
 .chip {
   font-family: var(--font-mono);
   font-size: 10px;
   padding: 3px 8px;
-  border: 1px solid rgba(255, 107, 133, 0.2);
-  color: rgba(255, 160, 175, 0.75);
-  background: rgba(255, 107, 133, 0.06);
+  border: 1px solid var(--border-rose);
+  color: var(--accent-rose);
+  background: transparent;
   border-radius: 2px;
+  opacity: 0.75;
 
   &.hi {
-    border-color: rgba(255, 107, 133, 0.5);
-    color: #ffb3bf;
-    background: rgba(255, 107, 133, 0.13);
+    border-color: var(--accent-rose);
+    color: var(--text-primary);
+    background: var(--border-rose);
+    opacity: 1;
   }
 
   &.purple {
-    border-color: rgba(167, 139, 250, 0.4);
+    border-color: var(--border-purple);
     color: var(--accent-purple);
-    background: rgba(167, 139, 250, 0.1);
+    background: transparent;
+    opacity: 1;
   }
 }
 
-// Timeline
+// ── Timeline ───────────────────────────────────────
 .timeline { display: flex; flex-direction: column; gap: 9px; }
 
 .tl-item {
@@ -218,19 +227,20 @@ h1 {
   &::before {
     content: '//';
     font-family: var(--font-mono);
-    color: rgba(255, 107, 133, 0.35);
+    color: var(--accent-rose);
+    opacity: 0.4;
     font-size: 10px;
     flex-shrink: 0;
     margin-top: 1px;
   }
 
   &.active {
-    color: #ffb3bf;
+    color: var(--accent-rose);
     font-weight: 600;
   }
 }
 
-// Stats
+// ── Stats ──────────────────────────────────────────
 .stats { display: flex; gap: 1.2rem; }
 
 .stat {
@@ -250,105 +260,11 @@ h1 {
 
 .stat-l {
   font-size: 10px;
-  color: rgba(220, 210, 238, 0.4);
+  color: var(--text-dim);
   margin-top: 2px;
 }
 
-
-
-
-
-
-
-
-
-
-// Mobile Slider – versteckt auf Desktop
-.bottom-mobile {
-  display: none;
-}
-
-@media (max-width: 691px) {
-
-  // Desktop Grid verstecken
-  .bottom-grid {
-    display: none;
-  }
-
-  // Mobile Slider anzeigen
-  .bottom-mobile {
-    display: flex;
-    flex-direction: column;
-    border-top: 1px solid var(--border-rose);
-    position: relative;
-    z-index: 1;
-    margin-top: auto;
-  }
-
-  .mobile-panels {
-    position: relative;
-    min-height: 140px;
-  }
-
-  .mobile-panel {
-    display: none;
-    padding: 1.3rem 1.6rem;
-    animation: fadeIn 0.4s ease;
-
-    &.active {
-      display: block;
-    }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: translateY(0);   }
-  }
-
-  // Dots
-  .mobile-dots {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    padding: 0.8rem;
-    border-top: 1px solid var(--border-rose);
-  }
-
-  .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 107, 133, 0.4);
-    background: transparent;
-    cursor: pointer;
-    padding: 0;
-    transition: all 0.2s;
-
-    &.active {
-      background: var(--accent-rose);
-      border-color: var(--accent-rose);
-    }
-  }
-
-  // Hero Grid auf Mobile einspaltig
-  .hero-grid {
-    grid-template-columns: 1fr;
-  }
-
-  h1 { font-size: 3rem; }
-}
-
-
-
-
-
-
-
-
-
-
-
-// Theme Picker
+// ── Theme Picker ───────────────────────────────────
 .theme-picker {
   position: fixed;
   bottom: 1.5rem;
@@ -369,16 +285,9 @@ h1 {
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(10px);
-  transition: border-color 0.3s, transform 0.2s;
+  transition: transform 0.2s;
 
-  &:hover {
-    transform: scale(1.1);
-    border-color: var(--accent-rose);
-  }
-
-  .theme-dot {
-    display: none; // nur als Datenspeicher
-  }
+  &:hover { transform: scale(1.1); }
 }
 
 .theme-options {
@@ -423,9 +332,7 @@ h1 {
     color: var(--text-primary);
   }
 
-  &.active {
-    color: var(--accent-rose);
-  }
+  &.active { color: var(--accent-rose); }
 
   .theme-preview {
     width: 14px;
@@ -439,4 +346,56 @@ h1 {
     font-size: 11px;
     color: var(--accent-rose);
   }
+}
+
+// ── Mobile ─────────────────────────────────────────
+.bottom-mobile { display: none; }
+
+@media (max-width: 691px) {
+
+  .bottom-grid { display: none; }
+
+  .bottom-mobile {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--border-rose);
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+  }
+
+  .mobile-panels { position: relative; min-height: 140px; }
+
+  .mobile-panel {
+    display: none;
+    padding: 1.3rem 1.6rem;
+    animation: fadeIn 0.4s ease;
+
+    &.active { display: block; }
+  }
+
+  .mobile-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 0.8rem;
+    border-top: 1px solid var(--border-rose);
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--accent-rose);
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.2s;
+
+    &.active { background: var(--accent-rose); }
+  }
+
+  .hero-grid { grid-template-columns: 1fr; }
+
+  h1 { font-size: 3rem; }
 }
