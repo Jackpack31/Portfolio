@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -17,6 +17,14 @@ export class Navbar {
     { label: 'projekte',   path: '/projekte' },
     { label: '3d_druck',   path: '/3d-druck' },
   ];
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('nav')) {
+      this.menuOpen = false;
+    }
+  }
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
