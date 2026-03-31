@@ -1,0 +1,12 @@
+<nav class="nav">
+  <a routerLink="/" class="logo">JL<span>/</span>dev</a>
+  <div class="links">
+    @for (link of links; track link.path) {
+      <a [routerLink]="link.path"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: link.path === '/' }">
+        {{ link.label }}
+      </a>
+    }
+  </div>
+</nav>

@@ -1,0 +1,36 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--border-rose);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(15, 11, 24, 0.85);
+  backdrop-filter: blur(12px);
+}
+
+.logo {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent-rose);
+
+  span { color: rgba(255, 255, 255, 0.25); }
+}
+
+.links {
+  display: flex;
+  gap: 1.5rem;
+
+  a {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.45);
+    transition: color 0.2s;
+
+    &:hover { color: var(--accent-rose); }
+    &.active { color: var(--accent-rose); }
+  }
+}

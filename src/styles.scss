@@ -1,1 +1,29 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Fira+Code:wght@400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-main:       #0f0b18;
+  --accent-rose:   #ff6b85;
+  --accent-purple: #c4b5fd;
+  --text-primary:  #f0eaf8;
+  --text-muted:    rgba(230, 220, 245, 0.62);
+  --text-dim:      rgba(225, 215, 240, 0.45);
+  --border-rose:   rgba(255, 107, 133, 0.15);
+  --border-purple: rgba(167, 139, 250, 0.35);
+  --font-display:  'Outfit', sans-serif;
+  --font-mono:     'Fira Code', monospace;
+}
+
+body {
+  font-family: var(--font-display);
+  background: var(--bg-main);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+a { text-decoration: none; color: inherit; }
