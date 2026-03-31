@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -141,5 +141,14 @@ export class Home implements OnInit, OnDestroy {
     this.activePanel = index;
     clearInterval(this.timer);
     this.startTimer();
+  }
+
+  cursorX = -300;
+  cursorY = -300;
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e: MouseEvent) {
+    this.cursorX = e.clientX - 100;
+    this.cursorY = e.clientY - 100;
   }
 }
