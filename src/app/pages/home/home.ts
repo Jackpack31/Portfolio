@@ -34,6 +34,14 @@ export class Home implements OnInit, OnDestroy {
     this.cursorY = e.clientY - 100;
   }
 
+  @HostListener('document:click', ['$event'])
+onDocumentClick(event: MouseEvent) {
+  const target = event.target as HTMLElement;
+  if (!target.closest('.theme-picker')) {
+    this.showThemePicker = false;
+  }
+}
+
   // Panels
   panels = ['stack', 'erfahrung', 'stats'];
   activePanel = 0;
