@@ -1,1 +1,134 @@
-<p>hobbies works!</p>
+<div class="page">
+
+  <div class="glow glow1"></div>
+  <div class="glow glow2"></div>
+
+  <!-- Übersicht -->
+  @if (!selectedProject) {
+    <div class="overview">
+
+      <div class="page-header">
+        <div class="eyebrow">// 3D_DRUCK · PROJEKTE</div>
+        <h1>MEINE<br><span class="outline">MODELLE</span></h1>
+        <p class="sub">Alle selbst designten und gedruckten Projekte – von funktionalen Teilen bis zu Deko.</p>
+      </div>
+
+      <div class="grid">
+        @for (project of projects; track project.id) {
+          <div class="card" (click)="openProject(project)">
+
+            <div class="card-img-wrap">
+              <img [src]="project.previewImage" [alt]="project.title" class="card-img"/>
+              <div class="card-overlay">
+                <span class="card-open">→ details</span>
+              </div>
+              <span class="card-category">{{ project.category }}</span>
+            </div>
+
+            <div class="card-body">
+              <div class="card-title">{{ project.title }}</div>
+              <div class="card-desc">{{ project.description }}</div>
+              <div class="card-tags">
+                @for (tag of project.tags; track tag) {
+                  <span class="tag">{{ tag }}</span>
+                }
+              </div>
+              <div class="card-meta">
+                <span class="meta-item">{{ project.printSettings.material }}</span>
+                <span class="meta-item">{{ project.printSettings.time }}</span>
+                <span class="meta-item">{{ project.date }}</span>
+              </div>
+            </div>
+
+          </div>
+        }
+      </div>
+
+    </div>
+  }
+
+  <!-- Detail Ansicht -->
+  @if (selectedProject) {
+    <div class="detail">
+
+      <button class="back-btn" (click)="closeProject()">← zurück zur Übersicht</button>
+
+      <div class="detail-grid">
+
+        <!-- Bilder -->
+        <div class="detail-images">
+          <div class="main-image-wrap">
+            <img
+              [src]="selectedProject.images[activeImage]"
+              [alt]="selectedProject.title"
+              class="main-image"/>
+          </div>
+          @if (selectedProject.images.length > 1) {
+            <div class="thumbnails">
+              @for (img of selectedProject.images; track img; let i = $index) {
+                <div
+                  [class]="activeImage === i ? 'thumb active' : 'thumb'"
+                  (click)="setImage(i)">
+                  <img [src]="img" [alt]="selectedProject.title + ' ' + i"/>
+                </div>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Infos -->
+        <div class="detail-info">
+
+          <div class="eyebrow">// {{ selectedProject.category }}</div>
+          <h2>{{ selectedProject.title }}</h2>
+          <p class="detail-desc">{{ selectedProject.description }}</p>
+
+          <!-- Print Settings -->
+          <div class="settings-block">
+            <div class="block-label">// DRUCKEINSTELLUNGEN</div>
+            <div class="settings-grid">
+              <div class="setting">
+                <span class="setting-label">Material</span>
+                <span class="setting-value">{{ selectedProject.printSettings.material }}</span>
+              </div>
+              <div class="setting">
+                <span class="setting-label">Infill</span>
+                <span class="setting-value">{{ selectedProject.printSettings.infill }}</span>
+              </div>
+              <div class="setting">
+                <span class="setting-label">Druckzeit</span>
+                <span class="setting-value">{{ selectedProject.printSettings.time }}</span>
+              </div>
+              <div class="setting">
+                <span class="setting-label">Skalierung</span>
+                <span class="setting-value">{{ selectedProject.printSettings.scale }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tags -->
+          <div class="detail-tags">
+            @for (tag of selectedProject.tags; track tag) {
+              <span class="tag">{{ tag }}</span>
+            }
+          </div>
+
+          <!-- STL Downloads -->
+          @if (selectedProject.stlFiles.length > 0) {
+            <div class="stl-block">
+              <div class="block-label">// STL DATEIEN</div>
+              @for (file of selectedProject.stlFiles; track file.name) {
+                <button class="stl-btn" (click)="downloadStl(file)">
+                  <span class="stl-icon">⬇</span>
+                  {{ file.name }}
+                </button>
+              }
+            </div>
+          }
+
+        </div>
+      </div>
+    </div>
+  }
+
+</div>
