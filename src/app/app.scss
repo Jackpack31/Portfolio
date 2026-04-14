@@ -1,16 +1,25 @@
 @keyframes doubleRing {
-  0%   { transform: scale(1); opacity: 0.6; }
-  100% { transform: scale(2.4); opacity: 0; }
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(2.4); opacity: 0;   }
 }
 
 @keyframes doubleRing2 {
-  0%   { transform: scale(1); opacity: 0.4; }
-  100% { transform: scale(1.8); opacity: 0; }
+  0%   { transform: scale(1);   opacity: 0.4; }
+  100% { transform: scale(1.8); opacity: 0;   }
 }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+.particle-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .theme-picker {
@@ -25,7 +34,7 @@
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: var(--navbar-bg);
+  background: rgba(15, 11, 24, 0.9);
   border: 1px solid var(--border-rose);
   color: var(--accent-rose);
   font-size: 18px;
@@ -63,7 +72,7 @@
   position: absolute;
   bottom: 52px;
   right: 0;
-  background: var(--navbar-bg);
+  background: rgba(15, 11, 24, 0.95);
   border: 1px solid var(--border-rose);
   border-radius: 8px;
   padding: 0.8rem;
@@ -117,7 +126,6 @@
   }
 }
 
-// ── Mode Toggle ────────────────────────────────────
 .mode-toggle {
   display: flex;
   align-items: center;
@@ -134,10 +142,7 @@
   &:hover { background: rgba(255, 255, 255, 0.07); }
 }
 
-.mode-icon {
-  font-size: 13px;
-  color: var(--accent-rose);
-}
+.mode-icon  { font-size: 13px; color: var(--accent-rose); }
 
 .mode-label {
   font-family: var(--font-mono);
@@ -162,14 +167,11 @@
     height: 10px;
     border-radius: 50%;
     background: var(--accent-rose);
-    top: 1px;
-    left: 1px;
+    top: 1px; left: 1px;
     transition: transform 0.2s;
   }
 
-  &.light::after {
-    transform: translateX(14px);
-  }
+  &.light::after { transform: translateX(14px); }
 }
 
 .theme-divider {
