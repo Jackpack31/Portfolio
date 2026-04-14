@@ -8,7 +8,8 @@ interface Project3D {
   date: string;
   previewImage: string;
   images: string[];
-  stlFiles: { name: string; url: string }[];
+  originalUrl: string;
+  originalSource: string;
   tags: string[];
   printSettings: {
     material: string;
@@ -33,45 +34,38 @@ export class Hobbies {
   projects: Project3D[] = [
     {
       id: 1,
-      title: 'Beispielprojekt 1',
-      description: 'Kurze Beschreibung des Projekts. Was wurde gedruckt und warum.',
-      category: 'Werkzeug',
-      date: '2024-03',
-      previewImage: '3d/projekt1/preview.jpg',
-      images: [
-        '3d/projekt1/preview.jpg',
-        '3d/projekt1/bild2.jpg',
-      ],
-      stlFiles: [
-        { name: 'teil1.stl', url: '3d/projekt1/teil1.stl' },
-      ],
-      tags: ['PLA', 'funktional'],
-      printSettings: {
-        material: 'PLA',
-        infill: '20%',
-        time: '3h 20min',
-        scale: '100%'
+  title: 'Mario Mahjong',
+  description: 'Original von Angies Gizmos',
+  category: 'Spiel',
+  date: '2025-01',
+  previewImage: '3d/projekt1/preview.jpg',
+  images: ['3d/projekt1/preview.jpg'],
+  originalUrl: 'https://makerworld.com/de/models/2207215-8-bit-mario-mahjong-complete-set',
+  originalSource: 'MakerWorld',
+  tags: ['PLA', 'Mario', 'Spiel'],
+  printSettings: {
+    material: 'PLA',
+    infill: '20%',
+    time: '70h',
+    scale: '100%'
       }
     },
     {
       id: 2,
-      title: 'Beispielprojekt 2',
-      description: 'Kurze Beschreibung des zweiten Projekts.',
-      category: 'Deko',
-      date: '2024-06',
-      previewImage: '3d/projekt2/preview.jpg',
-      images: [
-        '3d/projekt2/preview.jpg',
-      ],
-      stlFiles: [
-        { name: 'modell.stl', url: '3d/projekt2/modell.stl' },
-      ],
-      tags: ['PETG', 'design'],
-      printSettings: {
-        material: 'PETG',
-        infill: '15%',
-        time: '5h',
-        scale: '100%'
+  title: 'Fuchs',
+  description: 'Original von Bedlam Threadz',
+  category: 'Schattenbox',
+  date: '2026-04',
+  previewImage: '3d/projekt2/preview.jpg',
+  images: ['3d/projekt2/preview.jpg'],
+  originalUrl: 'https://makerworld.com/de/models/886239-smell-the-roses-shadowbox',
+  originalSource: 'MakerWorld',
+  tags: ['PLA', 'Schattenbox'],
+  printSettings: {
+    material: 'PLA',
+    infill: '20%',
+    time: '5h',
+    scale: '100%'
       }
     }
   ];

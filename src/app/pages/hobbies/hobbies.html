@@ -9,8 +9,8 @@
 
       <div class="page-header">
         <div class="eyebrow">// 3D_DRUCK · PROJEKTE</div>
-        <h1>MEINE<br><span class="outline">MODELLE</span></h1>
-        <p class="sub">Alle selbst designten und gedruckten Projekte – von funktionalen Teilen bis zu Deko.</p>
+        <h1>DRUCK<br><span class="outline">PROJEKTE</span></h1>
+        <p class="sub">Alle Projekte nur nachgedruckt.</p>
       </div>
 
       <div class="grid">
@@ -113,18 +113,17 @@
             }
           </div>
 
-          <!-- STL Downloads -->
-          @if (selectedProject.stlFiles.length > 0) {
-            <div class="stl-block">
-              <div class="block-label">// STL DATEIEN</div>
-              @for (file of selectedProject.stlFiles; track file.name) {
-                <button class="stl-btn" (click)="downloadStl(file)">
-                  <span class="stl-icon">⬇</span>
-                  {{ file.name }}
-                </button>
-              }
-            </div>
-          }
+          <div class="original-block">
+            <div class="block-label">// ORIGINAL QUELLE</div>
+            
+              <a [href]="selectedProject.originalUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="original-btn">
+              <span class="original-icon">↗</span>
+              Original auf {{ selectedProject.originalSource }} ansehen
+            </a>
+          </div>
 
         </div>
       </div>
