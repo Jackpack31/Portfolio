@@ -1,2 +1,37 @@
 <app-navbar />
 <router-outlet />
+
+<div class="theme-picker" (document:click)="closePickerIfOutside($event)">
+
+  <button
+    [class]="isPulsing ? 'theme-toggle pulse' : 'theme-toggle'"
+    (click)="onPickerClick()">⬡</button>
+
+  @if (showThemePicker) {
+    <div class="theme-options">
+
+      <!-- Dark / Light Toggle -->
+      <div class="mode-toggle" (click)="toggleMode()">
+        <span class="mode-icon">{{ currentMode === 'dark' ? '☀' : '☾' }}</span>
+        <span class="mode-label">{{ currentMode === 'dark' ? 'Light Mode' : 'Dark Mode' }}</span>
+        <span class="mode-indicator" [class.light]="currentMode === 'light'"></span>
+      </div>
+
+      <div class="theme-divider"></div>
+
+      <div class="theme-label">// FARBSCHEMA</div>
+      @for (theme of themes; track theme.id) {
+        <button
+          [class]="activeTheme === theme.id ? 'theme-btn active' : 'theme-btn'"
+          (click)="setTheme(theme)">
+          <span class="theme-preview" [style.background]="theme.color"></span>
+          {{ theme.label }}
+          @if (activeTheme === theme.id) {
+            <span class="check">✓</span>
+          }
+        </button>
+      }
+    </div>
+  }
+
+</div>

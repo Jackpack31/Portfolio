@@ -4,10 +4,12 @@
   align-items: center;
   padding: 1rem 2rem;
   border-bottom: 1px solid var(--border-rose);
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
-  background: rgba(15, 11, 24, 0.85);
+  background: var(--navbar-bg);
   backdrop-filter: blur(12px);
 }
 

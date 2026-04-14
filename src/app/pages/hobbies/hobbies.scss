@@ -91,7 +91,7 @@ h1 {
 
 // Karte
 .card {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface-1);
   border: 1px solid var(--border-rose);
   border-radius: 10px;
   overflow: hidden;
@@ -99,6 +99,7 @@ h1 {
   transition: border-color 0.2s, transform 0.2s;
 
   &:hover {
+    background: var(--surface-2);
     border-color: var(--accent-rose);
     transform: translateY(-3px);
 
@@ -174,7 +175,6 @@ h1 {
   color: var(--text-muted);
   line-height: 1.6;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -314,7 +314,7 @@ h2 {
 }
 
 .setting {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface-1);
   border: 1px solid var(--border-rose);
   border-radius: 6px;
   padding: 8px 12px;
@@ -354,7 +354,7 @@ h2 {
   gap: 8px;
   width: 100%;
   padding: 10px 14px;
-  background: rgba(255, 107, 133, 0.05);
+  background: var(--surface-2);
   border: 1px solid var(--border-rose);
   border-radius: 6px;
   color: var(--text-muted);

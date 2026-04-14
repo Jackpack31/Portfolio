@@ -1,1 +1,83 @@
-<p>skills works!</p>
+<div class="page">
+
+  <div class="glow glow1"></div>
+  <div class="glow glow2"></div>
+  <div class="glow glow3"></div>
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="eyebrow">// KENNTNISSE & WERDEGANG</div>
+    <h1>SKILLS &<br><span class="outline">ERFAHRUNG</span></h1>
+  </div>
+
+  <!-- Kategorie Filter -->
+  <div class="filter-row">
+    @for (cat of categories; track cat.id) {
+      <button
+        [class]="activeCategory === cat.id ? 'filter-btn active' : 'filter-btn'"
+        (click)="setCategory(cat.id)">
+        {{ cat.label }}
+      </button>
+    }
+  </div>
+
+  <!-- Skills Grid -->
+  <div class="skills-grid">
+    @for (skill of filteredSkills; track skill.name) {
+      <div class="skill-card">
+        <div class="skill-header">
+          <span class="skill-name">{{ skill.name }}</span>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar" [style.width.%]="skill.level"></div>
+        </div>
+        <div class="skill-level">{{ skill.level }}%</div>
+      </div>
+    }
+  </div>
+
+  <!-- Timeline -->
+  <div class="timeline-section">
+    <div class="section-label">// BILDUNG & BERUFSERFAHRUNG</div>
+
+    <div class="timeline">
+      @for (item of timeline; track item.title) {
+        <div [class]="'tl-item' + (item.active ? ' active' : '') + (item.parallel ? ' parallel' : '')">
+
+          <div class="tl-left">
+            <div [class]="'tl-dot ' + item.type"></div>
+            <div class="tl-line"></div>
+          </div>
+
+          <div class="tl-content">
+            @if (item.parallel) {
+              <div class="parallel-badge">// zeitgleich</div>
+            }
+            <div class="tl-header">
+              <div class="tl-title">{{ item.title }}</div>
+              <div class="tl-period">{{ item.period }}</div>
+            </div>
+            <div class="tl-place">
+              @if (item.url) {
+                <a [href]="item.url" target="_blank" rel="noopener noreferrer" class="tl-link">
+                  {{ item.place }} ↗
+                </a>
+              } @else {
+                {{ item.place }}
+              }
+            </div>
+            @if (item.points.length > 0) {
+              <ul class="tl-points">
+                @for (point of item.points; track point) {
+                  <li>{{ point }}</li>
+                }
+              </ul>
+            }
+          </div>
+
+        </div>
+      }
+    </div>
+  </div>
+
+</div>

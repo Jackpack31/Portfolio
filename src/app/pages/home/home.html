@@ -4,54 +4,24 @@
   <div class="glow glow2"></div>
   <div class="glow glow3"></div>
 
-  <div
-    class="cursor-glow"
-    [style.left.px]="cursorX"
-    [style.top.px]="cursorY">
-  </div>
+  <!-- Cursor Canvas -->
+  <canvas class="cursor-canvas" #cursorCanvas></canvas>
 
-  <!-- Theme Picker -->
-  <div class="theme-picker">
-    <button class="theme-toggle" (click)="showThemePicker = !showThemePicker">⬡</button>
-
-    @if (showThemePicker) {
-      <div class="theme-options">
-        <div class="theme-label">// FARBSCHEMA</div>
-        @for (theme of themes; track theme.id) {
-          <button
-            [class]="activeTheme === theme.id ? 'theme-btn active' : 'theme-btn'"
-            (click)="setTheme(theme)">
-            <span class="theme-preview" [style.background]="theme.color"></span>
-            {{ theme.label }}
-            @if (activeTheme === theme.id) {
-              <span class="check">✓</span>
-            }
-          </button>
-        }
-      </div>
-    }
-  </div>
-
-  <!-- Hero Bereich -->
+  <!-- Hero -->
   <div class="hero">
+    <div class="eyebrow">FACHINFORMATIKER · ANWENDUNGSENTWICKLUNG</div>
 
-<div class="hero-top">
-  <div class="eyebrow">FACHINFORMATIKER · ANWENDUNGSENTWICKLUNG</div>
-  <h1>JAKOB<br><span class="outline">LETTNER</span></h1>
-  <p class="sub">
-    Von CNC-Maschinen zur Softwareentwicklung.<br>
-    Analytisch, präzise, motiviert.
-  </p>
-</div>
+    <h1>JAKOB<br><span class="outline">LETTNER</span></h1>
 
-<div class="hero-bottom">
-  <div class="btns">
-    <a routerLink="/projekte" class="btn-primary">→ Projekte ansehen</a>
-    <a href="mailto:lettnerjakob5@gmail.com" class="btn-secondary">→ Kontakt aufnehmen</a>
-  </div>
-</div>
+    <div class="hero-grid">
 
-  </div>
+      <!-- Links: Beschreibung -->
+      <p class="sub">
+        Von CNC-Maschinen zur Softwareentwicklung.
+        Analytisch, präzise, schnell lernend.
+        Angular · TypeScript · Python · Blender.
+      </p>
+
 
   <!-- Desktop Grid -->
   <div class="bottom-grid">
