@@ -83,13 +83,16 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const pc = this.particleCanvasRef.nativeElement;
-    this.particleCtx = pc.getContext('2d')!;
+  const pc = this.particleCanvasRef.nativeElement;
+  this.particleCtx = pc.getContext('2d')!;
+  window.addEventListener('resize', () => this.resizeCanvas());
+
+  setTimeout(() => {
     this.resizeCanvas();
-    window.addEventListener('resize', () => this.resizeCanvas());
     this.buildParticles();
     this.animateParticles();
-  }
+  }, 50);
+}
 
   ngOnDestroy() {
     clearInterval(this.pulseInterval);

@@ -18,6 +18,7 @@
   padding: 2.5rem 2rem 5rem;
 }
 
+// ── Glows ──────────────────────────────────────────
 .glow {
   position: absolute;
   border-radius: 50%;
@@ -72,29 +73,60 @@ h1 {
   }
 }
 
-// ── Grid ───────────────────────────────────────────
-.grid {
+// ── Layout ─────────────────────────────────────────
+.layout {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 12px;
+  grid-template-columns: 160px 1fr;
+  gap: 1.5rem;
+  align-items: start;
 }
 
-// ── Box ────────────────────────────────────────────
+// ── Sidebar ────────────────────────────────────────
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: sticky;
+  top: 70px; // unterhalb der Navbar
+}
+
+.nav-item {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 7px 10px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  cursor: default;
+
+  &.active {
+    color: var(--accent-rose);
+    background: rgba(255, 107, 133, 0.08);
+    border: 1px solid var(--border-rose);
+  }
+
+  &.inactive {
+    color: var(--text-dim);
+    border: 1px solid transparent;
+  }
+}
+
+// ── Content ────────────────────────────────────────
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .box {
-  background: var(--surface-1);
+  background: rgba(255, 107, 133, 0.04);
   border: 1px solid var(--border-rose);
   border-radius: 10px;
   padding: 1.2rem 1.4rem;
-  backdrop-filter: blur(8px);
   transition: border-color 0.2s;
 
   &:hover { border-color: var(--accent-rose); }
-
-  &.wide {
-    grid-column: span 3;
-  }
 }
 
 .box-label {
@@ -121,7 +153,7 @@ h1 {
 .link {
   color: var(--accent-rose);
   text-decoration: none;
-  opacity: 0.8;
+  opacity: 0.85;
   transition: opacity 0.2s;
 
   &:hover { opacity: 1; }
@@ -131,11 +163,13 @@ h1 {
 @media (max-width: 691px) {
   h1 { font-size: 2.5rem; }
 
-  .grid {
+  .layout {
     grid-template-columns: 1fr;
   }
 
-  .box.wide {
-    grid-column: span 1;
+  .sidebar {
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 }

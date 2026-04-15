@@ -306,36 +306,45 @@ body.light-mode {
     .section-body p { color: var(--text-muted) !important; }
   }
 
-  // ── Theme Picker ──────────────────────────────────
-  .theme-toggle {
-    background: var(--navbar-bg) !important;
-    border-color: var(--border-rose) !important;
-    color: var(--accent-rose) !important;
+// ── Theme Picker ──────────────────────────────────
+.theme-tab {
+  background: var(--navbar-bg) !important;
+  border-color: var(--border-rose) !important;
+
+  &:hover { background: rgba(255, 107, 133, 0.06) !important; }
+}
+
+.tab-icon  { color: var(--accent-rose) !important; }
+.tab-txt   { color: var(--accent-rose) !important; opacity: 0.6 !important; }
+
+.tab-dot {
+  opacity: 0.4 !important;
+  &.active { opacity: 1 !important; }
+}
+
+.theme-options {
+  background: rgba(255, 255, 255, 0.97) !important;
+  border-color: var(--border-rose) !important;
+}
+
+.theme-label { color: rgba(0, 0, 0, 0.3) !important; }
+
+.theme-btn {
+  color: var(--text-muted) !important;
+  &:hover {
+    background: var(--surface-hover) !important;
+    color: var(--text-primary) !important;
   }
+  &.active { color: var(--accent-rose) !important; }
+}
 
-  .theme-options {
-    background: rgba(255, 255, 255, 0.97) !important;
-    border-color: var(--border-rose) !important;
-  }
+.mode-toggle {
+  background: var(--surface-1) !important;
+  border-color: var(--border-rose) !important;
+  &:hover { background: var(--surface-hover) !important; }
+}
 
-  .theme-label { color: rgba(0, 0, 0, 0.3) !important; }
-
-  .theme-btn {
-    color: var(--text-muted) !important;
-    &:hover {
-      background: var(--surface-hover) !important;
-      color: var(--text-primary) !important;
-    }
-    &.active { color: var(--accent-rose) !important; }
-  }
-
-  .mode-toggle {
-    background: var(--surface-1) !important;
-    border-color: var(--border-rose) !important;
-    &:hover { background: var(--surface-hover) !important; }
-  }
-
-  .mode-label    { color: var(--text-muted) !important; }
-  .mode-icon     { color: var(--accent-rose) !important; }
-  .theme-divider { background: var(--border-rose) !important; }
+.mode-label    { color: var(--text-muted) !important; }
+.mode-icon     { color: var(--accent-rose) !important; }
+.theme-divider { background: var(--border-rose) !important; }
 }

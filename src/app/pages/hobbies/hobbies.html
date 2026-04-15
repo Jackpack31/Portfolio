@@ -113,19 +113,55 @@
             }
           </div>
 
+          <!-- 3D Viewer Button – nur wenn modelFile gesetzt ist -->
+          @if (selectedProject.modelFile) {
+            <button class="view-3d-btn" (click)="open3DViewer()">
+              <svg class="cube-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 1L14 4.5V11.5L8 15L2 11.5V4.5L8 1Z" stroke="currentColor" stroke-width="1" fill="none"/>
+                <path d="M8 1V15M2 4.5L8 8L14 4.5" stroke="currentColor" stroke-width="0.8" opacity="0.6"/>
+              </svg>
+              // 3D Modell ansehen
+            </button>
+          }
+
           <div class="original-block">
             <div class="block-label">// ORIGINAL QUELLE</div>
-            
-              <a [href]="selectedProject.originalUrl"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="original-btn">
+            <a [href]="selectedProject.originalUrl"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="original-btn">
               <span class="original-icon">↗</span>
               Original auf {{ selectedProject.originalSource }} ansehen
             </a>
           </div>
 
         </div>
+      </div>
+    </div>
+  }
+
+  <!-- 3D Viewer Modal -->
+  @if (show3DViewer && selectedProject) {
+    <div class="viewer-overlay" (click)="onOverlayClick($event)">
+      <div class="viewer-modal">
+
+        <div class="viewer-header">
+          <span class="viewer-title">// 3D VIEWER · {{ selectedProject.title | uppercase }}</span>
+          <button class="viewer-close" (click)="close3DViewer()">✕</button>
+        </div>
+
+        <!-- Three.js Canvas -->
+        <div class="viewer-canvas-wrap">
+          <canvas id="three-canvas" class="three-canvas"></canvas>
+        </div>
+
+        <div class="viewer-footer">
+          <span class="controls-hint">
+            <span class="key">Drehen</span> Linksklick + Ziehen &nbsp;·&nbsp;
+            <span class="key">Zoomen</span> Scrollrad
+          </span>
+        </div>
+
       </div>
     </div>
   }

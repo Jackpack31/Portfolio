@@ -25,5 +25,15 @@
 </head>
 <body>
   <app-root></app-root>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/3MFLoader.js"></script>
+  <script>
+    // Loader global verfügbar machen für hobbies.ts
+    window.THREE_STL = { STLLoader: THREE.STLLoader };
+    window.THREE_3MF = { ThreeMFLoader: THREE.ThreeMFLoader };
+  </script>
+
 </body>
 </html>

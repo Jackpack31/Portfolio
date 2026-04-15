@@ -4,11 +4,25 @@
 
 <router-outlet />
 
+<!-- Theme Tab + Picker -->
 <div class="theme-picker" (document:click)="closePickerIfOutside($event)">
-  <button
-    [class]="isPulsing ? 'theme-toggle pulse' : 'theme-toggle'"
-    (click)="onPickerClick()">⬡</button>
 
+  <!-- Tab am rechten Rand -->
+  <div class="theme-tab" (click)="onPickerClick()">
+    <span [class]="isPulsing ? 'tab-icon pulse' : 'tab-icon'">⬡</span>
+    <span class="tab-txt">THEME</span>
+    <div class="tab-dots">
+      @for (theme of themes; track $index) {
+        <div
+          class="tab-dot"
+          [style.background]="theme.color"
+          [class.active]="activeTheme === theme.id">
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Picker Panel -->
   @if (showThemePicker) {
     <div class="theme-options">
       <div class="mode-toggle" (click)="toggleMode()">
@@ -18,7 +32,7 @@
       </div>
       <div class="theme-divider"></div>
       <div class="theme-label">// FARBSCHEMA</div>
-      @for (theme of themes; track theme.id) {
+      @for (theme of themes; track $index) {
         <button
           [class]="activeTheme === theme.id ? 'theme-btn active' : 'theme-btn'"
           (click)="setTheme(theme)">
@@ -31,4 +45,5 @@
       }
     </div>
   }
+
 </div>
