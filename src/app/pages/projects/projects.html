@@ -1,1 +1,87 @@
-<p>projects works!</p>
+<div class="page">
+
+  <div class="glow glow1"></div>
+  <div class="glow glow2"></div>
+  <div class="glow glow3"></div>
+
+  <div class="page-header">
+    <div class="eyebrow">// MEINE PROJEKTE</div>
+    <h1>PROJEKTE &<br><span class="outline">ARBEITEN</span></h1>
+  </div>
+
+  <div class="layout">
+
+    <!-- Featured -->
+    @if (featuredProject) {
+      <div class="featured">
+        <div class="feat-img">
+          @if (featuredProject.image) {
+            <img [src]="featuredProject.image" [alt]="featuredProject.title" class="feat-screenshot"/>
+          } @else {
+            <div class="img-placeholder">// screenshot</div>
+          }
+        </div>
+        <div class="feat-body">
+          <div>
+            <span class="feat-badge">// featured</span>
+            @if (featuredProject.status === 'in-arbeit') {
+              <span class="wip-badge">// in arbeit</span>
+            }
+            <div class="feat-title">{{ featuredProject.title }}</div>
+            <p class="feat-desc">{{ featuredProject.description }}</p>
+            <div class="feat-tags">
+              @for (tag of featuredProject.tags; track tag) {
+                <span class="tag">{{ tag }}</span>
+              }
+            </div>
+          </div>
+          <div class="feat-links">
+            <a [href]="featuredProject.githubUrl"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="btn btn-gh">→ GitHub</a>
+            @if (featuredProject.liveUrl) {
+              <a [href]="featuredProject.liveUrl"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 class="btn btn-live">→ Live ansehen</a>
+            }
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Weitere Projekte -->
+    <div class="grid-label">// WEITERE PROJEKTE</div>
+    <div class="cards">
+      @for (project of otherProjects; track project.id) {
+        <div class="card">
+          <div class="card-img">
+            @if (project.image) {
+              <img [src]="project.image" [alt]="project.title" class="card-screenshot"/>
+            } @else {
+              <div class="img-placeholder small">// screenshot</div>
+            }
+          </div>
+          <div class="card-body">
+            @if (project.status === 'in-arbeit') {
+              <span class="wip">// in arbeit</span>
+            }
+            <div class="card-title">{{ project.title }}</div>
+            <p class="card-desc">{{ project.description }}</p>
+            <div class="card-tags">
+              @for (tag of project.tags; track tag) {
+                <span class="card-tag">{{ tag }}</span>
+              }
+            </div>
+            <a [href]="project.githubUrl"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="card-link">→ GitHub</a>
+          </div>
+        </div>
+      }
+    </div>
+
+  </div>
+</div>

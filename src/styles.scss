@@ -75,6 +75,11 @@ body.light-mode {
         &.active { color: var(--accent-rose) !important; }
       }
     }
+    .wip, .wip-badge {
+  color: rgba(180, 120, 0, 0.9) !important;
+  background: rgba(180, 120, 0, 0.08) !important;
+  border-color: rgba(180, 120, 0, 0.3) !important;
+  }
   }
 
   .page {

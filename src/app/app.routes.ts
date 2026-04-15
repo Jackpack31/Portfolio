@@ -17,5 +17,9 @@ export const routes: Routes = [
     path: '3d-druck',
     loadComponent: () => import('./pages/hobbies/hobbies').then(m => m.Hobbies)
   },
+  {
+  path: 'impressum',
+  loadComponent: () => import('./pages/impressum/impressum').then(m => m.Impressum)
+},
   { path: '**', redirectTo: '' }
 ];

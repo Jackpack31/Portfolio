@@ -18,15 +18,18 @@ export class Home implements OnInit, OnDestroy {
   private timer: any;
 
   skills = [
-    { label: 'Angular',    type: 'hi'     },
-    { label: 'TypeScript', type: 'hi'     },
-    { label: 'Python',     type: 'hi'     },
-    { label: 'C#',         type: 'purple' },
-    { label: 'Git',        type: 'purple' },
-    { label: 'Blender',    type: ''       },
-    { label: 'SQL',        type: ''       },
-    { label: 'HTML/CSS',   type: ''       },
-    { label: 'Unity',      type: ''       },
+  { label: 'Angular',      type: 'hi'     },
+  { label: 'TypeScript',   type: 'hi'     },
+  { label: 'Python',       type: 'hi'     },
+  { label: 'C#',           type: 'purple' },
+  { label: 'C',            type: 'purple' },
+  { label: 'Git',          type: 'purple' },
+  { label: 'Blender',      type: ''       },
+  { label: 'SQL',          type: ''       },
+  { label: 'HTML/CSS',     type: ''       },
+  { label: 'Unity',        type: ''       },
+  { label: 'Unreal',       type: ''       },
+  { label: 'Django',       type: ''       },
   ];
 
   timeline = [
@@ -37,8 +40,6 @@ export class Home implements OnInit, OnDestroy {
   ];
 
   stats = [
-    { value: '7+', label: 'Berufsjahre',  purple: false },
-    { value: '6+', label: 'Sprachen',     purple: true  },
     { value: 'B2', label: 'Englisch',     purple: false },
   ];
 

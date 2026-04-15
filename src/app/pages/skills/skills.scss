@@ -95,9 +95,9 @@ h1 {
   font-family: var(--font-mono);
   font-size: 10px;
   padding: 5px 12px;
-  background: transparent;
+  background: var(--surface-1);
   border: 1px solid var(--border-rose);
-  color: var(--text-dim);
+  color: var(--text-muted);
   border-radius: 3px;
   cursor: pointer;
   transition: all 0.2s;
@@ -106,6 +106,7 @@ h1 {
   &:hover {
     border-color: var(--accent-rose);
     color: var(--accent-rose);
+    background: var(--surface-2);
   }
 
   &.active {
@@ -175,6 +176,12 @@ h1 {
 .timeline-section {
   position: relative;
   z-index: 1;
+  background: var(--surface-1);
+  border: 1px solid var(--border-rose);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  backdrop-filter: blur(8px);
 }
 
 .section-label {
@@ -207,7 +214,6 @@ h1 {
   }
 }
 
-// Parallele Einträge
 .tl-item.parallel {
   margin-left: 2rem;
   position: relative;
@@ -226,7 +232,7 @@ h1 {
     );
   }
 
-  .tl-dot { border-color: var(--accent-purple); }
+  .tl-dot  { border-color: var(--accent-purple); }
   .tl-line { background: var(--border-purple); }
 }
 
@@ -291,7 +297,7 @@ h1 {
 .tl-period {
   font-family: var(--font-mono);
   font-size: 10px;
-  color: var(--text-dim);
+  color: var(--text-muted);
   white-space: nowrap;
 }
 

@@ -1,31 +1,30 @@
 <div class="page">
 
-  <div class="glow glow1"></div>
-  <div class="glow glow2"></div>
-  <div class="glow glow3"></div>
+  <!-- Partikel Canvas wird in app.ts gehandhabt -->
 
   <!-- Cursor Canvas -->
   <canvas class="cursor-canvas" #cursorCanvas></canvas>
 
+  <!-- Glows -->
+  <div class="glow glow1"></div>
+  <div class="glow glow2"></div>
+  <div class="glow glow3"></div>
+
   <!-- Hero -->
   <div class="hero">
-    <div class="eyebrow">FACHINFORMATIKER · ANWENDUNGSENTWICKLUNG</div>
-
-    <h1>JAKOB<br><span class="outline">LETTNER</span></h1>
-
-    <div class="hero-grid">
-
-      <!-- Links: Beschreibung -->
+    <div class="hero-content">
+      <div class="eyebrow">FACHINFORMATIKER · ANWENDUNGSENTWICKLUNG</div>
+      <h1>JAKOB<br><span class="outline">LETTNER</span></h1>
       <p class="sub">
         Von CNC-Maschinen zur Softwareentwicklung.
         Analytisch, präzise, schnell lernend.
         Angular · TypeScript · Python · Blender.
       </p>
-
+    </div>
+  </div>
 
   <!-- Desktop Grid -->
   <div class="bottom-grid">
-
     <div class="col">
       <div class="col-label">// TECH_STACK</div>
       <div class="chips">
@@ -34,7 +33,6 @@
         }
       </div>
     </div>
-
     <div class="col">
       <div class="col-label">// ERFAHRUNG</div>
       <div class="timeline">
@@ -45,7 +43,6 @@
         }
       </div>
     </div>
-
     <div class="col">
       <div class="col-label">// STATS</div>
       <div class="stats">
@@ -57,14 +54,11 @@
         }
       </div>
     </div>
-
   </div>
 
   <!-- Mobile Slider -->
   <div class="bottom-mobile">
-
     <div class="mobile-panels">
-
       <div [class]="activePanel === 0 ? 'mobile-panel active' : 'mobile-panel'">
         <div class="col-label">// TECH_STACK</div>
         <div class="chips">
@@ -73,7 +67,6 @@
           }
         </div>
       </div>
-
       <div [class]="activePanel === 1 ? 'mobile-panel active' : 'mobile-panel'">
         <div class="col-label">// ERFAHRUNG</div>
         <div class="timeline">
@@ -84,7 +77,6 @@
           }
         </div>
       </div>
-
       <div [class]="activePanel === 2 ? 'mobile-panel active' : 'mobile-panel'">
         <div class="col-label">// STATS</div>
         <div class="stats">
@@ -96,10 +88,7 @@
           }
         </div>
       </div>
-
     </div>
-
-    <!-- Dots Navigation -->
     <div class="mobile-dots">
       @for (panel of panels; track panel; let i = $index) {
         <button
@@ -108,7 +97,6 @@
         </button>
       }
     </div>
-
   </div>
 
 </div>

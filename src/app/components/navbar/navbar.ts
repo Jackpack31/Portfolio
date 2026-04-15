@@ -16,6 +16,7 @@ export class Navbar {
     { label: 'skills',     path: '/skills'   },
     { label: 'projekte',   path: '/projekte' },
     { label: '3d_druck',   path: '/3d-druck' },
+    { label: 'impressum',  path: '/impressum'  },
   ];
 
   @HostListener('document:click', ['$event'])
