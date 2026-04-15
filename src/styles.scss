@@ -1,31 +1,66 @@
+// ─────────────────────────────────────────────────
+// styles.scss – Globale Styles
+//
+// Enthält:
+// 1. CSS Variablen (Default = Dark Mode Rose)
+//    → werden von ThemeService bei Theme-Wechsel überschrieben
+// 2. Basis-Reset & Body Styles
+// 3. Light Mode Overrides via body.light-mode Klasse
+//    → body.light-mode wird von ThemeService gesetzt
+//    → überschreibt komponentenspezifische Dark Styles
+//
+// Datenfluss:
+//   ThemeService.apply() → setzt CSS Variablen auf :root
+//   ThemeService.apply() → setzt body.light-mode Klasse
+//   Komponenten → lesen CSS Variablen via var()
+// ─────────────────────────────────────────────────
+
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Fira+Code:wght@400;600&display=swap');
 
+// ── Reset ───────────────────────────────────────────
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+// ── CSS Variablen (Dark Mode Rose Default) ──────────
+// Werden von ThemeService dynamisch überschrieben
+// Alle Komponenten nutzen diese Variablen via var()
 :root {
+  // Hintergrund & Akzentfarben
   --bg-main:       #0f0b18;
-  --accent-rose:   #ff6b85;
-  --accent-purple: #c4b5fd;
+  --accent-rose:   #ff6b85;  // Hauptakzentfarbe
+  --accent-purple: #c4b5fd;  // Sekundärakzentfarbe
+
+  // Textfarben (abgestuft nach Wichtigkeit)
   --text-primary:  #f0eaf8;
   --text-muted:    rgba(230, 220, 245, 0.62);
   --text-dim:      rgba(225, 215, 240, 0.45);
+
+  // Rahmenfarben
   --border-rose:   rgba(255, 107, 133, 0.15);
   --border-purple: rgba(167, 139, 250, 0.35);
+
+  // Hintergrund-Glow Farben (genutzt in Seiten-Animationen)
   --glow1:         rgba(255, 107, 133, 0.45);
   --glow2:         rgba(167, 139, 250, 0.38);
   --glow3:         rgba(255, 107, 133, 0.22);
+
+  // Oberflächen (Karten, Boxen)
   --surface-1:     rgba(255, 255, 255, 0.02);
   --surface-2:     rgba(255, 255, 255, 0.04);
   --surface-hover: rgba(255, 255, 255, 0.05);
+
+  // Navbar Hintergrund mit Blur-Effekt
   --navbar-bg:     rgba(15, 11, 24, 0.85);
+
+  // Schriftarten
   --font-display:  'Outfit', sans-serif;
   --font-mono:     'Fira Code', monospace;
 }
 
+// ── Basis Body ──────────────────────────────────────
 body {
   font-family: var(--font-display);
   background: var(--bg-main);
@@ -33,6 +68,7 @@ body {
   min-height: 100vh;
 }
 
+// app-root bekommt padding-top da Navbar fixed ist (52px hoch)
 app-root {
   display: block;
   padding-top: 52px;
@@ -40,12 +76,15 @@ app-root {
 
 a { text-decoration: none; color: inherit; }
 
-// ── Light Mode Global Overrides ────────────────────
+// ── Light Mode Global Overrides ─────────────────────
+// Wird aktiv wenn ThemeService body.light-mode setzt
+// Gegliedert nach Komponenten für einfache Wartung
 body.light-mode {
 
   background: var(--bg-main);
   color: var(--text-primary);
 
+  // ── Navbar ────────────────────────────────────────
   app-root {
     .nav {
       background: var(--navbar-bg) !important;
@@ -61,6 +100,7 @@ body.light-mode {
       .burger .bar { background: var(--accent-rose) !important; }
     }
 
+    // Mobile Dropdown Menü
     .mobile-menu {
       background: var(--navbar-bg) !important;
       border-bottom-color: var(--border-rose) !important;
@@ -75,26 +115,31 @@ body.light-mode {
         &.active { color: var(--accent-rose) !important; }
       }
     }
-    .wip, .wip-badge {
-  color: rgba(180, 120, 0, 0.9) !important;
-  background: rgba(180, 120, 0, 0.08) !important;
-  border-color: rgba(180, 120, 0, 0.3) !important;
-  }
   }
 
+  // ── WIP Badges ────────────────────────────────────
+  // Gelb ist im Light Mode zu hell → dunkleres Orange-Braun
+  .wip, .wip-badge {
+    color: rgba(180, 120, 0, 0.9) !important;
+    background: rgba(180, 120, 0, 0.08) !important;
+    border-color: rgba(180, 120, 0, 0.3) !important;
+  }
+
+  // ── Home Seite ────────────────────────────────────
   .page {
     .eyebrow {
       color: var(--accent-rose) !important;
       &::before { background: var(--accent-rose) !important; }
     }
 
-    h1 { color: var(--text-primary) !important; }
-    .sub { color: var(--text-muted) !important; }
+    h1    { color: var(--text-primary) !important; }
+    .sub  { color: var(--text-muted) !important; }
 
+    // Erfahrungs-Timeline (home bottom-grid)
     .tl-item {
       color: var(--text-dim) !important;
       &::before { color: var(--accent-rose) !important; }
-      &.active { color: var(--accent-rose) !important; }
+      &.active  { color: var(--accent-rose) !important; }
     }
 
     .col-label {
@@ -102,6 +147,7 @@ body.light-mode {
       opacity: 0.7 !important;
     }
 
+    // Tech Stack Chips
     .chip {
       border-color: var(--border-rose) !important;
       color: var(--accent-rose) !important;
@@ -120,9 +166,11 @@ body.light-mode {
       }
     }
 
+    // Stats
     .stat-n { color: var(--accent-rose) !important; }
     .stat-l { color: var(--text-dim) !important; }
 
+    // Bottom Grid (fixed am unteren Rand)
     .bottom-grid {
       background: var(--navbar-bg) !important;
       border-top-color: var(--border-rose) !important;
@@ -130,40 +178,78 @@ body.light-mode {
 
     .col { border-right-color: var(--border-rose) !important; }
 
+    // Mobile Slider Dots
     .dot {
       border-color: var(--accent-rose) !important;
       &.active { background: var(--accent-rose) !important; }
     }
 
-    .mobile-dots {
-      border-top-color: var(--border-rose) !important;
-    }
+    .mobile-dots { border-top-color: var(--border-rose) !important; }
   }
 
-  // Hobbies
+  // ── Skills Seite ──────────────────────────────────
+  .timeline-section {
+    background: rgba(255, 255, 255, 0.6) !important;
+    border-color: var(--border-rose) !important;
+  }
+
+  .tl-period { color: var(--text-muted) !important; }
+  .tl-place  { opacity: 1 !important; color: var(--accent-rose) !important; }
+  .tl-title  { color: var(--text-primary) !important; }
+
+  .tl-points li {
+    color: var(--text-muted) !important;
+    &::before { color: var(--accent-rose) !important; }
+  }
+
+  .parallel-badge {
+    color: var(--accent-purple) !important;
+    background: rgba(124, 58, 237, 0.08) !important;
+    border-color: var(--border-purple) !important;
+  }
+
+  .section-label { color: var(--accent-rose) !important; }
+
+  .filter-btn {
+    color: var(--text-muted) !important;
+    border-color: var(--border-rose) !important;
+    &.active {
+      background: var(--border-rose) !important;
+      color: var(--accent-rose) !important;
+    }
+    &:hover { color: var(--accent-rose) !important; }
+  }
+
+  .skill-card {
+    background: rgba(255, 255, 255, 0.6) !important;
+    border-color: var(--border-rose) !important;
+  }
+
+  .skill-name  { color: var(--text-primary) !important; }
+  .skill-level { color: var(--text-dim) !important; }
+
+  // ── 3D-Druck Seite ────────────────────────────────
   .card {
     background: rgba(255, 255, 255, 0.7) !important;
     border-color: var(--border-rose) !important;
 
-    .card-title  { color: var(--text-primary) !important; }
-    .card-desc   { color: var(--text-muted) !important; }
+    .card-title    { color: var(--text-primary) !important; }
+    .card-desc     { color: var(--text-muted) !important; }
     .card-category {
       background: rgba(255, 255, 255, 0.85) !important;
       color: var(--accent-rose) !important;
     }
-    .tag {
-      color: var(--accent-purple) !important;
-      border-color: var(--border-purple) !important;
-    }
+    .tag       { color: var(--accent-purple) !important; border-color: var(--border-purple) !important; }
     .meta-item { color: var(--text-dim) !important; }
   }
 
+  // Detail Ansicht (3D-Druck)
   .detail {
-    .back-btn   { color: var(--accent-rose) !important; }
-    h2          { color: var(--text-primary) !important; }
+    .back-btn    { color: var(--accent-rose) !important; }
+    h2           { color: var(--text-primary) !important; }
     .detail-desc { color: var(--text-muted) !important; }
     .block-label { color: var(--accent-rose) !important; opacity: 0.7 !important; }
-    .eyebrow    { color: var(--accent-rose) !important; }
+    .eyebrow     { color: var(--accent-rose) !important; }
 
     .main-image-wrap { border-color: var(--border-rose) !important; }
 
@@ -190,14 +276,37 @@ body.light-mode {
     }
   }
 
-  // Page Header Hobbies
+  // ── Seiten Header (Skills, Projekte, 3D-Druck, Impressum)
   .page-header {
     .eyebrow { color: var(--accent-rose) !important; }
-    h1 { color: var(--text-primary) !important; }
-    .sub { color: var(--text-muted) !important; }
+    h1       { color: var(--text-primary) !important; }
+    .sub     { color: var(--text-muted) !important; }
   }
 
-  // Theme Picker
+  // ── Projekte Seite ────────────────────────────────
+  .featured {
+    background: rgba(255, 255, 255, 0.6) !important;
+    border-color: var(--border-rose) !important;
+
+    .feat-title { color: var(--text-primary) !important; }
+    .feat-desc  { color: var(--text-muted) !important; }
+  }
+
+  .feat-img {
+    background: rgba(255, 255, 255, 0.4) !important;
+    border-color: var(--border-rose) !important;
+  }
+
+  .card-title { color: var(--text-primary) !important; }
+  .card-desc  { color: var(--text-muted) !important; }
+
+  // ── Impressum ─────────────────────────────────────
+  .section {
+    border-left-color: var(--border-rose) !important;
+    .section-body p { color: var(--text-muted) !important; }
+  }
+
+  // ── Theme Picker ──────────────────────────────────
   .theme-toggle {
     background: var(--navbar-bg) !important;
     border-color: var(--border-rose) !important;
@@ -226,7 +335,7 @@ body.light-mode {
     &:hover { background: var(--surface-hover) !important; }
   }
 
-  .mode-label { color: var(--text-muted) !important; }
-  .mode-icon  { color: var(--accent-rose) !important; }
+  .mode-label    { color: var(--text-muted) !important; }
+  .mode-icon     { color: var(--accent-rose) !important; }
   .theme-divider { background: var(--border-rose) !important; }
 }

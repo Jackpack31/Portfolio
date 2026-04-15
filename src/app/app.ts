@@ -1,7 +1,25 @@
-import { Component, OnInit, OnDestroy, inject, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+// ─────────────────────────────────────────────────
+// app.ts – Root Komponente
+//
+// Verantwortlich für:
+// 1. Globale Partikel-Animation (Canvas) → läuft auf allen Seiten
+// 2. Theme Picker → Dark/Light Mode + 4 Farbschemen
+// 3. Dynamische Seitentitel bei Navigation
+// 4. Scroll-to-top bei Seitenwechsel
+//
+// Datenfluss:
+//   ThemeService → liefert Themes & aktuellen Modus
+//   Router Events → triggern Titel-Update & Scroll
+//   Theme/Mode Änderung → rebuildet Partikel
+// ─────────────────────────────────────────────────
+
+import {
+  Component, OnInit, OnDestroy,
+  inject, ViewChild, ElementRef, AfterViewInit
+} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
 import { RouterOutlet } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { Navbar } from './components/navbar/navbar';
 import { ThemeService } from './services/theme';
 
@@ -14,30 +32,40 @@ import { ThemeService } from './services/theme';
 })
 export class App implements OnInit, OnDestroy, AfterViewInit {
 
+  // ── Canvas Referenz ─────────────────────────────
+  // Partikel-Canvas liegt über dem gesamten Viewport
   @ViewChild('particleCanvas') particleCanvasRef!: ElementRef<HTMLCanvasElement>;
-
   private particleCtx!: CanvasRenderingContext2D;
   private particleFrame!: number;
   private particles: any[] = [];
 
+  // ── Services ────────────────────────────────────
   private router       = inject(Router);
   private themeService = inject(ThemeService);
 
+  // ── Theme Picker State ──────────────────────────
   themes          = this.themeService.getThemes();
   activeTheme     = this.themeService.getActiveId();
   currentMode     = this.themeService.getCurrentMode();
   showThemePicker = false;
+
+  // ── Pulse Animation ─────────────────────────────
+  // Pulsiert alle 10s bis Theme erstmals gewechselt
   isPulsing       = false;
   hasChangedTheme = false;
   private pulseInterval: any;
 
-  titles: Record<string, string> = {
-    '/':         'Jakob Lettner – Fachinformatiker AE',
-    '/skills':   'Skills – Jakob Lettner',
-    '/projekte': 'Projekte – Jakob Lettner',
-    '/3d-druck': '3D Druck – Jakob Lettner',
+  // ── Seitentitel ─────────────────────────────────
+  // Wird bei NavigationEnd automatisch gesetzt
+  private titles: Record<string, string> = {
+    '/':          'Jakob Lettner – Fachinformatiker AE',
+    '/skills':    'Skills – Jakob Lettner',
+    '/projekte':  'Projekte – Jakob Lettner',
+    '/3d-druck':  '3D Druck – Jakob Lettner',
+    '/impressum': 'Impressum – Jakob Lettner',
   };
 
+  // ── Lifecycle ───────────────────────────────────
   ngOnInit() {
     this.themeService.loadSaved();
     this.currentMode = this.themeService.getCurrentMode();
@@ -68,7 +96,7 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
     cancelAnimationFrame(this.particleFrame);
   }
 
-  // ── Canvas ─────────────────────────────────────────
+  // ── Canvas Resize ───────────────────────────────
   private resizeCanvas() {
     const pc = this.particleCanvasRef.nativeElement;
     pc.width  = window.innerWidth;
@@ -76,20 +104,21 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
     this.buildParticles();
   }
 
-  // ── Partikel aufbauen ──────────────────────────────
+  // ── Partikel aufbauen ───────────────────────────
+  // Dark  → Fireflies (lila) + Embers (rose)
+  // Light → je nach Theme: Sakura / Bubbles / Blätter / Laub
   private buildParticles() {
     const W       = window.innerWidth;
     const H       = window.innerHeight;
     const mode    = this.themeService.getCurrentMode();
     const themeId = this.themeService.getActiveId();
 
-    if (mode === 'light') {
-      this.buildLightParticles(W, H, themeId);
-    } else {
-      this.buildDarkParticles(W, H);
-    }
+    mode === 'light'
+      ? this.buildLightParticles(W, H, themeId)
+      : this.buildDarkParticles(W, H);
   }
 
+  // 60 Partikel: erste 30 = Fireflies (lila), Rest = Embers (rose)
   private buildDarkParticles(W: number, H: number) {
     this.particles = Array.from({length: 60}, (_, i) => {
       const isFirefly = i < 30;
@@ -109,6 +138,8 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  // Light Partikel: Typ richtet sich nach aktivem Theme
+  // blue = weniger Partikel (Blasen sind größer)
   private buildLightParticles(W: number, H: number, themeId: string) {
     const count = themeId === 'blue' ? 15 : 30;
     this.particles = Array.from({length: count}, () => ({
@@ -129,7 +160,7 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
     }));
   }
 
-  // ── Partikel animieren ─────────────────────────────
+  // ── Partikel Animation Loop ─────────────────────
   private animateParticles() {
     const canvas = this.particleCanvasRef.nativeElement;
     const ctx    = this.particleCtx;
@@ -142,16 +173,16 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
     ctx.clearRect(0, 0, W, H);
 
     this.particles.forEach(p => {
-      if (mode === 'dark') {
-        this.drawDarkParticle(ctx, p, W, H, rose, purple);
-      } else {
-        this.drawLightParticle(ctx, p, W, H);
-      }
+      mode === 'dark'
+        ? this.drawDarkParticle(ctx, p, W, H, rose, purple)
+        : this.drawLightParticle(ctx, p, W, H);
     });
 
     this.particleFrame = requestAnimationFrame(() => this.animateParticles());
   }
 
+  // ── Dark Partikel Zeichnen ──────────────────────
+  // firefly = lila Glow, ember = rose Glow
   private drawDarkParticle(
     ctx: CanvasRenderingContext2D,
     p: any, W: number, H: number,
@@ -191,6 +222,8 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  // ── Light Partikel Zeichnen ─────────────────────
+  // rose → Sakura | blue → Bubbles | green → Blätter | orange → Laub
   private drawLightParticle(
     ctx: CanvasRenderingContext2D,
     p: any, W: number, H: number
@@ -216,11 +249,8 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  // ── Zeichenfunktionen ──────────────────────────────
-  private drawSakura(
-    ctx: CanvasRenderingContext2D,
-    p: any, c1: string, c2: string, a: number
-  ) {
+  // ── Sakura (Rose Theme) ─────────────────────────
+  private drawSakura(ctx: CanvasRenderingContext2D, p: any, c1: string, c2: string, a: number) {
     const c = p.useC1 ? c1 : c2;
     ctx.save();
     ctx.translate(p.x, p.y);
@@ -241,10 +271,8 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
     ctx.restore();
   }
 
-  private drawBubble(
-    ctx: CanvasRenderingContext2D,
-    p: any, c: string, a: number
-  ) {
+  // ── Bubble (Blue Theme) ─────────────────────────
+  private drawBubble(ctx: CanvasRenderingContext2D, p: any, c: string, a: number) {
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
     ctx.strokeStyle = `rgba(${c}, ${a * 3})`;
@@ -260,10 +288,8 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
     ctx.fill();
   }
 
-  private drawLeaf(
-    ctx: CanvasRenderingContext2D,
-    p: any, c1: string, c2: string, a: number
-  ) {
+  // ── Leaf (Green Theme) ──────────────────────────
+  private drawLeaf(ctx: CanvasRenderingContext2D, p: any, c1: string, c2: string, a: number) {
     const c = p.useC1 ? c1 : c2;
     ctx.save();
     ctx.translate(p.x, p.y);
@@ -283,10 +309,8 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
     ctx.restore();
   }
 
-  private drawMaple(
-    ctx: CanvasRenderingContext2D,
-    p: any, c1: string, c2: string, a: number
-  ) {
+  // ── Maple (Orange Theme) ────────────────────────
+  private drawMaple(ctx: CanvasRenderingContext2D, p: any, c1: string, c2: string, a: number) {
     const c = p.useC1 ? c1 : c2;
     ctx.save();
     ctx.translate(p.x, p.y);
@@ -315,7 +339,7 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
     ctx.restore();
   }
 
-  // ── Hilfsmethoden ──────────────────────────────────
+  // ── CSS Variablen auslesen ──────────────────────
   private getAccentColor(): string {
     return getComputedStyle(document.documentElement)
       .getPropertyValue('--accent-rose').trim() || '#ff6b85';
@@ -335,7 +359,7 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
     return `${r},${g},${b}`;
   }
 
-  // ── Theme ──────────────────────────────────────────
+  // ── Theme Picker ────────────────────────────────
   startPulse() {
     this.pulseInterval = setInterval(() => {
       this.isPulsing = true;

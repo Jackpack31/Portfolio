@@ -1,9 +1,44 @@
+// ─────────────────────────────────────────────────
+// theme.ts – Globaler Theme Service
+//
+// Verantwortlich für:
+// - 4 Farbschemen: Rose, Blau, Grün, Orange
+// - Je Dark + Light Variante pro Schema
+// - CSS Variablen auf :root setzen
+// - body.light-mode / body.dark-mode Klasse
+// - Persistenz via localStorage
+// - System-Theme Erkennung (prefers-color-scheme)
+//
+// Datenfluss:
+//   app.ts → ruft apply() / toggleMode() auf
+//   CSS Variablen → werden von allen Komponenten genutzt
+//   localStorage → speichert 'theme' + 'theme-mode'
+// ─────────────────────────────────────────────────
+
 import { Injectable } from '@angular/core';
+
+// Typ für eine Theme-Variante (dark oder light)
+type ThemeVars = Record<string, string>;
+
+// Typ für ein vollständiges Theme
+interface Theme {
+  id: string;
+  label: string;
+  color: string;  // Vorschau-Farbe im Theme Picker
+  dark: ThemeVars;
+  light: ThemeVars;
+}
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
 
-  themes = [
+  // ── Theme Definitionen ──────────────────────────
+  // --accent-rose   = Hauptakzentfarbe
+  // --accent-purple = Sekundärakzentfarbe
+  // --glow1/2/3     = Farben für pulsierende Hintergrund-Glows
+  // --surface-1/2   = Hintergrund für Karten/Boxen
+  // --navbar-bg     = Navbar Hintergrund mit Transparenz
+  themes: Theme[] = [
     {
       id: 'rose',
       label: 'Rose',
@@ -162,6 +197,10 @@ export class ThemeService {
     },
   ];
 
+  // ── Öffentliche Methoden ────────────────────────
+
+  // Wendet Theme + Mode an und speichert in localStorage
+  // Mode Priorität: Parameter > localStorage > System
   apply(themeId: string, mode?: 'dark' | 'light') {
     const theme = this.themes.find(t => t.id === themeId);
     if (!theme) return;
@@ -169,11 +208,13 @@ export class ThemeService {
     const resolvedMode = mode ?? this.getSavedMode() ?? this.getSystemMode();
     const vars = resolvedMode === 'light' ? theme.light : theme.dark;
 
+    // CSS Variablen auf :root setzen
     const root = document.documentElement;
     Object.entries(vars).forEach(([k, v]) => {
       root.style.setProperty(k, v as string);
     });
 
+    // body Klasse für Light Mode CSS Overrides in styles.scss
     if (resolvedMode === 'light') {
       document.body.classList.add('light-mode');
       document.body.classList.remove('dark-mode');
@@ -187,13 +228,18 @@ export class ThemeService {
     localStorage.setItem('theme-mode', resolvedMode);
   }
 
+  // Wechselt zwischen Dark und Light Mode
   toggleMode() {
-    const currentMode = this.getSavedMode() ?? this.getSystemMode();
-    const newMode = currentMode === 'dark' ? 'light' : 'dark';
-    const themeId = this.getActiveId();
-    this.apply(themeId, newMode);
+    const newMode = this.getCurrentMode() === 'dark' ? 'light' : 'dark';
+    this.apply(this.getActiveId(), newMode);
   }
 
+  // Lädt gespeichertes Theme beim App-Start
+  loadSaved() {
+    this.apply(localStorage.getItem('theme') ?? 'rose');
+  }
+
+  // Erkennt System Dark/Light Mode Präferenz
   getSystemMode(): 'dark' | 'light' {
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
@@ -207,11 +253,6 @@ export class ThemeService {
     return this.getSavedMode() ?? this.getSystemMode();
   }
 
-  loadSaved() {
-    const themeId = localStorage.getItem('theme') ?? 'rose';
-    this.apply(themeId);
-  }
-
-  getThemes() { return this.themes; }
+  getThemes(): Theme[]  { return this.themes; }
   getActiveId(): string { return localStorage.getItem('theme') ?? 'rose'; }
 }
