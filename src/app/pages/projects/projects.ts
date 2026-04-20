@@ -47,8 +47,8 @@ export class Projects {
       description: 'Angular 21, animierte Canvas-Effekte, Theme-System mit Dark/Light Mode und vollständig responsivem Design.',
       image: '',
       tags: ['Angular 21', 'TypeScript', 'SCSS', 'Canvas API'],
-      githubUrl: 'https://github.com/jakoblettner', // TODO: echten Repo-Link eintragen
-      liveUrl: 'https://jakob-lettner.de',           // TODO: echte Domain eintragen
+      githubUrl: 'https://github.com/Jackpack31/Portfolio',
+      liveUrl: 'https://jackpack31.github.io/Portfolio/',
       status: 'in-arbeit',
       featured: true
     },
