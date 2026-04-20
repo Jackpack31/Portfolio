@@ -27,7 +27,7 @@ export class Home implements OnInit, OnDestroy {
   // Wechselt alle 10s zwischen Tech Stack / Erfahrung / Stats
   panels      = ['stack', 'erfahrung', 'stats'];
   activePanel = 0;
-  private timer: any;
+  private timer: ReturnType<typeof setInterval> | null = null;
 
   // ── Tech Stack ──────────────────────────────────
   // hi     = Rose hervorgehoben (Hauptskills)
@@ -65,7 +65,7 @@ export class Home implements OnInit, OnDestroy {
 
   // ── Lifecycle ───────────────────────────────────
   ngOnInit()    { this.startTimer(); }
-  ngOnDestroy() { clearInterval(this.timer); }
+  ngOnDestroy() { if (this.timer) clearInterval(this.timer); }
 
   // ── Panel Slider ────────────────────────────────
   startTimer() {
@@ -77,7 +77,7 @@ export class Home implements OnInit, OnDestroy {
   // Manuell zu einem Panel navigieren + Timer resetten
   goTo(index: number) {
     this.activePanel = index;
-    clearInterval(this.timer);
+    if (this.timer) clearInterval(this.timer);
     this.startTimer();
-  }
+}
 }

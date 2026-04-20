@@ -52,7 +52,7 @@ export class Projects {
       status: 'in-arbeit',
       featured: true
     },
-    {
+/*     {
       id: 2,
       title: 'Placeholder 1',           // TODO: durch echtes Projekt ersetzen
       description: 'Kurze Beschreibung was dieses Projekt macht.',
@@ -91,7 +91,7 @@ export class Projects {
       githubUrl: 'https://github.com/jakoblettner',
       status: 'fertig',
       featured: false
-    },
+    }, */
   ];
 
   // Gibt das Featured Projekt zurück (wird links groß angezeigt)
