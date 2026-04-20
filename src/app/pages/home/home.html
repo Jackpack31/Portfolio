@@ -54,7 +54,9 @@
   </div>
 
   <!-- Mobile Slider -->
-  <div class="bottom-mobile">
+  <div class="bottom-mobile"
+       (touchstart)="onTouchStart($event)"
+       (touchend)="onTouchEnd($event)">
     <div class="mobile-panels">
       <div [class]="activePanel === 0 ? 'mobile-panel active' : 'mobile-panel'">
         <div class="col-label">// TECH_STACK</div>

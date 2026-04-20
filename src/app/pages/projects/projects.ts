@@ -45,7 +45,7 @@ export class Projects {
       id: 1,
       title: 'Portfolio Website',
       description: 'Angular 21, animierte Canvas-Effekte, Theme-System mit Dark/Light Mode und vollständig responsivem Design.',
-      image: '',
+      image: 'portfolio-preview.png',
       tags: ['Angular 21', 'TypeScript', 'SCSS', 'Canvas API'],
       githubUrl: 'https://github.com/Jackpack31/Portfolio',
       liveUrl: 'https://jackpack31.github.io/Portfolio/',

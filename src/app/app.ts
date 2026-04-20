@@ -55,6 +55,10 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
   hasChangedTheme = false;
   private pulseInterval: any;
 
+  // ── Resize Handling ─────────────────────────────
+  private lastWidth   = window.innerWidth;
+  private resizeTimer: ReturnType<typeof setTimeout> | null = null;
+
   // ── Seitentitel ─────────────────────────────────
   // Wird bei NavigationEnd automatisch gesetzt
   private titles: Record<string, string> = {
@@ -83,20 +87,37 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-  const pc = this.particleCanvasRef.nativeElement;
-  this.particleCtx = pc.getContext('2d')!;
-  window.addEventListener('resize', () => this.resizeCanvas());
+    const pc = this.particleCanvasRef.nativeElement;
+    this.particleCtx = pc.getContext('2d')!;
 
-  setTimeout(() => {
-    this.resizeCanvas();
-    this.buildParticles();
-    this.animateParticles();
-  }, 50);
-}
+    window.addEventListener('resize', () => {
+      const newWidth = window.innerWidth;
+
+      // Nur reagieren wenn Breite sich signifikant ändert
+      // → ignoriert mobile Adressleiste (ändert nur Höhe)
+      if (Math.abs(newWidth - this.lastWidth) < 10) return;
+      this.lastWidth = newWidth;
+
+      // Debounce: erst nach 300ms neu aufbauen
+      // → kein flackern beim Fenster-ziehen
+      if (this.resizeTimer) clearTimeout(this.resizeTimer);
+      this.resizeTimer = setTimeout(() => {
+        this.resizeCanvas();
+        this.buildParticles();
+      }, 300);
+    });
+
+    setTimeout(() => {
+      this.resizeCanvas();
+      this.buildParticles();
+      this.animateParticles();
+    }, 50);
+  }
 
   ngOnDestroy() {
     clearInterval(this.pulseInterval);
     cancelAnimationFrame(this.particleFrame);
+    if (this.resizeTimer) clearTimeout(this.resizeTimer);
   }
 
   // ── Canvas Resize ───────────────────────────────
@@ -104,7 +125,6 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
     const pc = this.particleCanvasRef.nativeElement;
     pc.width  = window.innerWidth;
     pc.height = window.innerHeight;
-    this.buildParticles();
   }
 
   // ── Partikel aufbauen ───────────────────────────
