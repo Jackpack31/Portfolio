@@ -5,11 +5,9 @@
 // - Hero Bereich mit Name & Beschreibung
 // - Desktop: Tech Stack / Erfahrung / Stats Grid
 // - Mobile: Panel Slider mit Auto-Rotation alle 10s
-//         + Swipe-Geste zum Wechseln
 //
 // Datenfluss:
 //   timer → activePanel → home.html Panel Anzeige
-//   touchStart/touchEnd → swipe → goTo()
 // ─────────────────────────────────────────────────
 
 import {
@@ -31,12 +29,10 @@ export class Home implements OnInit, OnDestroy {
   activePanel = 0;
   private timer: ReturnType<typeof setInterval> | null = null;
 
-  // ── Swipe Handling ──────────────────────────────
-  // Minimale Pixel-Distanz damit ein Swipe erkannt wird
-  private touchStartX = 0;
-  private readonly SWIPE_THRESHOLD = 50;
-
   // ── Tech Stack ──────────────────────────────────
+  // hi     = Rose hervorgehoben (Hauptskills)
+  // purple = Lila hervorgehoben (Tools/Sprachen)
+  // ''     = normal (weitere Skills)
   skills = [
     { label: 'Angular',    type: 'hi'     },
     { label: 'TypeScript', type: 'hi'     },
@@ -53,6 +49,7 @@ export class Home implements OnInit, OnDestroy {
   ];
 
   // ── Erfahrungs-Timeline ─────────────────────────
+  // active = aktueller Eintrag (Rose hervorgehoben)
   timeline = [
     { text: 'Fachinformatiker AE · IBB 2025–heute',  active: true  },
     { text: 'Game Dev · WBH 2020–2024',              active: false },
@@ -61,6 +58,7 @@ export class Home implements OnInit, OnDestroy {
   ];
 
   // ── Stats ───────────────────────────────────────
+  // purple = Lila Akzentfarbe statt Rose
   stats = [
     { value: 'B2', label: 'Englisch', purple: false },
   ];
@@ -76,33 +74,10 @@ export class Home implements OnInit, OnDestroy {
     }, 10000);
   }
 
+  // Manuell zu einem Panel navigieren + Timer resetten
   goTo(index: number) {
     this.activePanel = index;
     if (this.timer) clearInterval(this.timer);
     this.startTimer();
-  }
-
-  // ── Swipe Gesten ────────────────────────────────
-  // Wird in home.html an .bottom-mobile gebunden
-
-  onTouchStart(e: TouchEvent) {
-    this.touchStartX = e.touches[0].clientX;
-  }
-
-  onTouchEnd(e: TouchEvent) {
-    const deltaX = e.changedTouches[0].clientX - this.touchStartX;
-
-    // Zu kurze Bewegung ignorieren
-    if (Math.abs(deltaX) < this.SWIPE_THRESHOLD) return;
-
-    if (deltaX < 0) {
-      // Swipe nach links → nächstes Panel
-      const next = (this.activePanel + 1) % this.panels.length;
-      this.goTo(next);
-    } else {
-      // Swipe nach rechts → vorheriges Panel
-      const prev = (this.activePanel - 1 + this.panels.length) % this.panels.length;
-      this.goTo(prev);
-    }
-  }
+}
 }

@@ -56,7 +56,7 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
   private pulseInterval: any;
 
   // ── Resize Handling ─────────────────────────────
-  private lastWidth   = window.innerWidth;
+  private lastWidth   = 0;
   private resizeTimer: ReturnType<typeof setTimeout> | null = null;
 
   // ── Seitentitel ─────────────────────────────────
