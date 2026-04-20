@@ -28,10 +28,10 @@ export class Navbar {
 
   // Navigationspunkte – path muss mit app.routes.ts übereinstimmen
   links = [
-    { label: 'über_mich',  path: '/'          },
+    { label: 'home',  path: '/'          },
     { label: 'skills',     path: '/skills'    },
     { label: 'projekte',   path: '/projekte'  },
-    { label: '3d_druck',   path: '/3d-druck'  },
+    { label: 'hobby',   path: '/3d-druck'  },
     { label: 'impressum',  path: '/impressum' },
   ];
 
