@@ -17,7 +17,7 @@
   min-height: calc(100vh - 52px);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 // ── Cursor Canvas ──────────────────────────────────
@@ -67,12 +67,47 @@
   z-index: 1;
   padding: 3rem 2rem 2rem;
   flex: 1;
+  display: flex;
+  align-items: flex-start;
+}
+
+.hero-inner {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  width: 100%;
+}
+
+// ── Foto Desktop ───────
+.hero-photo-wrap {
+  flex-shrink: 0;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--accent-rose);
+  box-shadow:
+    0 0 0 5px rgba(255, 107, 133, 0.12),
+    0 0 0 9px rgba(196, 181, 253, 0.08);
+}
+
+.hero-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
 }
 
 .hero-content {
   position: relative;
   z-index: 1;
-  max-width: 58%;
+  flex: 1;
+}
+
+// ── Mobile Photo ─────────
+.mobile-photo-wrap {
+  display: none;
 }
 
 .eyebrow {
@@ -231,9 +266,9 @@ h1 {
 
 @media (max-width: 691px) {
 
-  .hero-photo-bg { display: none; }
-
+  .hero-photo-wrap { display: none; }
   .hero-content { max-width: 100%; }
+  .hero { flex: 0; padding-bottom: 1rem; }
 
   .bottom-grid { display: none; }
 
@@ -243,7 +278,25 @@ h1 {
     border-top: 1px solid var(--border-rose);
     position: relative;
     z-index: 1;
-    margin-top: auto;
+  }
+
+  // ── Foto Mobile ─
+  .mobile-photo-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 0 0 1.2rem;
+  }
+
+  .mobile-photo {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    border: 2px solid var(--accent-rose);
+    box-shadow:
+      0 0 0 4px rgba(255, 107, 133, 0.12),
+      0 0 0 7px rgba(196, 181, 253, 0.08);
   }
 
   .mobile-panels { position: relative; min-height: 140px; }

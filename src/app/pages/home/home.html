@@ -1,7 +1,5 @@
 <div class="page">
 
-  <!-- Partikel Canvas wird in app.ts gehandhabt -->
-
   <!-- Glows -->
   <div class="glow glow1"></div>
   <div class="glow glow2"></div>
@@ -9,15 +7,29 @@
 
   <!-- Hero -->
   <div class="hero">
-    <div class="hero-content">
-      <div class="eyebrow">FACHINFORMATIKER · ANWENDUNGSENTWICKLUNG</div>
-      <h1>JAKOB<br><span class="outline">LETTNER</span></h1>
-      <p class="sub">
-        Von CNC-Maschinen zur Softwareentwicklung.
-        Analytisch, präzise, motiviert.
-        Angular · TypeScript · Python · Blender.
-      </p>
+
+    <!-- Desktop: Foto links, Text rechts (Variante 2) -->
+    <div class="hero-inner">
+      <div class="hero-photo-wrap">
+        <img src="Jakob.png" alt="Jakob Lettner" class="hero-photo"/>
+      </div>
+      <div class="hero-content">
+
+        <!-- Mobile: Foto zentriert über dem Namen -->
+        <div class="mobile-photo-wrap">
+          <img src="Jakob.png" alt="Jakob Lettner" class="mobile-photo"/>
+        </div>
+
+        <div class="eyebrow">FACHINFORMATIKER · ANWENDUNGSENTWICKLUNG</div>
+        <h1>JAKOB<br><span class="outline">LETTNER</span></h1>
+        <p class="sub">
+          Von CNC-Maschinen zur Softwareentwicklung.
+          Analytisch, präzise, motiviert.
+          Angular · TypeScript · Python · Blender.
+        </p>
+      </div>
     </div>
+
   </div>
 
   <!-- Desktop Grid -->
@@ -54,7 +66,10 @@
   </div>
 
   <!-- Mobile Slider -->
-  <div class="bottom-mobile">
+  <div class="bottom-mobile"
+       (touchstart)="onTouchStart($event)"
+       (touchend)="onTouchEnd($event)">
+
     <div class="mobile-panels">
       <div [class]="activePanel === 0 ? 'mobile-panel active' : 'mobile-panel'">
         <div class="col-label">// TECH_STACK</div>

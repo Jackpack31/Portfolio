@@ -5,9 +5,11 @@
 // - Hero Bereich mit Name & Beschreibung
 // - Desktop: Tech Stack / Erfahrung / Stats Grid
 // - Mobile: Panel Slider mit Auto-Rotation alle 10s
+//         + Swipe-Geste zum Wechseln
 //
 // Datenfluss:
 //   timer → activePanel → home.html Panel Anzeige
+//   touchStart/touchEnd → swipe → goTo()
 // ─────────────────────────────────────────────────
 
 import {
@@ -28,6 +30,11 @@ export class Home implements OnInit, OnDestroy {
   panels      = ['stack', 'erfahrung', 'stats'];
   activePanel = 0;
   private timer: ReturnType<typeof setInterval> | null = null;
+
+  // ── Swipe Handling ──────────────────────────────
+  // Minimale Pixel-Distanz damit ein Swipe erkannt wird
+  private touchStartX = 0;
+  private readonly SWIPE_THRESHOLD = 50;
 
   // ── Tech Stack ──────────────────────────────────
   // hi     = Rose hervorgehoben (Hauptskills)
@@ -79,5 +86,28 @@ export class Home implements OnInit, OnDestroy {
     this.activePanel = index;
     if (this.timer) clearInterval(this.timer);
     this.startTimer();
-}
+  }
+
+  // ── Swipe Gesten ────────────────────────────────
+  // Wird in home.html an .bottom-mobile gebunden
+  onTouchStart(e: TouchEvent) {
+    this.touchStartX = e.touches[0].clientX;
+  }
+
+  onTouchEnd(e: TouchEvent) {
+    const deltaX = e.changedTouches[0].clientX - this.touchStartX;
+
+    // Zu kurze Bewegung ignorieren
+    if (Math.abs(deltaX) < this.SWIPE_THRESHOLD) return;
+
+    if (deltaX < 0) {
+      // Swipe nach links → nächstes Panel
+      const next = (this.activePanel + 1) % this.panels.length;
+      this.goTo(next);
+    } else {
+      // Swipe nach rechts → vorheriges Panel
+      const prev = (this.activePanel - 1 + this.panels.length) % this.panels.length;
+      this.goTo(prev);
+    }
+  }
 }
